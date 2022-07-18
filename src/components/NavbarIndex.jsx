@@ -26,7 +26,7 @@ function NavbarIndex() {
               <Nav.Link href="/signup">Sign Up</Nav.Link>
               <Nav.Link href="/addProduct">Add Product</Nav.Link>
               <Nav.Link href="/orders">Orders</Nav.Link>
-              <Nav.Link href="/userOrder">UserOrder</Nav.Link>
+              <Nav.Link href="/userOrder">User Order</Nav.Link>
               <Navbar.Text>
                 {" "}
                 <User />{" "}
