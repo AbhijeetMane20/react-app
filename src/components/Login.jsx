@@ -24,17 +24,18 @@ function Login() {
       // the data to send
       body: JSON.stringify(requestBody),
     })
-      .then((res) => res.json())
+      // .then((res) => res.json())
       .then((resJson) => {
-        console.log('ABC');
-        localStorage.setItem("user", JSON.stringify(resJson));
-        navigate("/");
+        resJson.text().then((r) => {
+          localStorage.setItem("token", r);
+          navigate("/");
+          
+        });
       })
       .catch(
         () => setErrorMessage("Invalid Username Or Password"),
-        localStorage.removeItem("user")
+        localStorage.removeItem("token")
       );
-    console.log("XYZ");
   }
   function goBack() {
     navigate(-1);

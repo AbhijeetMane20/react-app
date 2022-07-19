@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import User from "./User";
 function NavbarIndex() {
   const navigate = useNavigate();
-  const user = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
 
 
   function logOut() {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/");
     window.location.reload();
   }
