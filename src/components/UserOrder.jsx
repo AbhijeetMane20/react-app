@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function UserOrder() {
   const [orders, setOrders] = useState([]);
   const user1 = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const userId = user1?.userId;
   const navigate = useNavigate();
 
@@ -18,7 +19,10 @@ function UserOrder() {
     }).then(() => refreshOrders());
   }
   function refreshOrders() {
-    fetch(`http://localhost:8080/order?userId=${userId}`).then((r) => {
+    fetch("http://localhost:8080/order", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r) => {
       r.json().then((j) => setOrders(j));
     });
   }

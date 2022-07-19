@@ -7,9 +7,10 @@ function AddOrder() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const { register, getValues } = useForm();
-  const user1 = JSON.parse(localStorage.getItem("user"));
-  const userId = user1?.userId;
+  // const user1 = JSON.parse(localStorage.getItem("user"));
+  // const userId = user1?.userId;
   const { id } = useParams();
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetch("http://localhost:8080/product/" + id).then((r) => {
       r.json().then((j) => setProduct(j));
@@ -23,13 +24,16 @@ function AddOrder() {
       quantity: formValues.quantity,
       customerName: formValues.customerName,
       address: formValues.address,
-      userId : userId
     };
     // navigate("/", { replace: true });
     // console.log(getValues());
     fetch("http://localhost:8080/order", {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+
       // the data to send
       body: JSON.stringify(requestBody),
     })
