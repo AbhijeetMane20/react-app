@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
-
+import url from "./GlobalVar";
 function ProductListComponent() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -16,7 +16,9 @@ function ProductListComponent() {
   }, [page]);
 
   function refreshList() {
-    fetch(`http://localhost:8080/products?page=${page}&size=6`).then((r) => {
+    fetch(
+      `${url}/products?page=${page}&size=6`
+    ).then((r) => {
       r.json().then((j) => {
         setProducts(j.content);
         setTotalPages(j.totalPages);
