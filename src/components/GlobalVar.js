@@ -1,3 +1,2 @@
-
-const url = "https://ecom-project-backend.herokuapp.com";
+const url = "http://localhost:8080";
 export default url;
