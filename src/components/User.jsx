@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import url from "./GlobalVar";
 
 function User() {
   const [user, setUser] = useState(null);
@@ -12,7 +13,7 @@ function User() {
     //     r.json().then((j) => setUser(j));
     //   });
     // }, [id]);
-    fetch("http://localhost:8080/user", {
+    fetch(`${url}/user`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
       // the data to send

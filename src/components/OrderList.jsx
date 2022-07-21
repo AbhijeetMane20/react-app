@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import url from "./GlobalVar";
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -13,12 +14,12 @@ function OrderList() {
   }, [page]);
 
   function cancleOrder(order) {
-    fetch(`http://localhost:8080/order/${order.orderId}/cancle`, {
+    fetch(`${url}order/${order.orderId}/cancle`, {
       method: "POST",
     }).then(() => refreshOrders());
   }
   function refreshOrders() {
-    fetch(`http://localhost:8080/orders?page=${page}&size=2`).then((r) => {
+    fetch(`${url}/orders?page=${page}&size=2`).then((r) => {
       r.json().then((j) => {
         setOrders(j.content);
         setTotalPages(j.totalPages);

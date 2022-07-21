@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import url from "./GlobalVar";
 
 function AddOrder() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function AddOrder() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   useEffect(() => {
-    fetch("http://localhost:8080/product/" + id).then((r) => {
+    fetch(`${url}/product/` + id).then((r) => {
       r.json().then((j) => setProduct(j));
     });
   }, [id]);
@@ -27,7 +28,7 @@ function AddOrder() {
     };
     // navigate("/", { replace: true });
     // console.log(getValues());
-    fetch("http://localhost:8080/order", {
+    fetch(`${url}/order`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

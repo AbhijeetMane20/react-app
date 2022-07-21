@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import url from "./GlobalVar";
 
 function ProductDetails() {
   // const product = props.product;
@@ -11,7 +12,7 @@ function ProductDetails() {
 
   const { id } = useParams();
   useEffect(() => {
-    fetch("http://localhost:8080/product/" + id).then((r) => {
+    fetch(`${url}/product/` + id).then((r) => {
       r.json().then((j) => setProduct(j));
     });
   }, [id]);

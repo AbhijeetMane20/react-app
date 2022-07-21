@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import url from "./GlobalVar";
 
 function OrderReciept() {
   const [order, setOrder] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
-    fetch("http://localhost:8080/order/" + id).then((r) => {
+    fetch(`${url}/order/` + id).then((r) => {
       r.json().then((j) => setOrder(j));
     });
   }, [id]);

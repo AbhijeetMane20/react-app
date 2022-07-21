@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import url from "./GlobalVar";
 
 function Login() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Login() {
     // navigate("/", { replace: true });
     // console.log(getValues());
 
-    fetch("http://localhost:8080/login", {
+    fetch(`${url}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // the data to send

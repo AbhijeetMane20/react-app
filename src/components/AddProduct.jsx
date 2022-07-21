@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import url from "./GlobalVar";
 
 function AddProduct() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function AddProduct() {
     };
     // navigate("/", { replace: true });
     // console.log(getValues());
-    fetch("http://localhost:8080/product", {
+    fetch(`${url}/product`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       // the data to send

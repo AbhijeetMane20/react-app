@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import url from "./GlobalVar";
 
 function UserOrder() {
   const [orders, setOrders] = useState([]);
@@ -14,12 +15,12 @@ function UserOrder() {
   }, []);
 
   function cancleOrder(order) {
-    fetch(`http://localhost:8080/order/${order.orderId}/cancle`, {
+    fetch(`${url}/order/${order.orderId}/cancle`, {
       method: "POST",
     }).then(() => refreshOrders());
   }
   function refreshOrders() {
-    fetch("http://localhost:8080/order", {
+    fetch(`${url}/order`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     }).then((r) => {

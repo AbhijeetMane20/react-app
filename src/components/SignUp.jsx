@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import url from "./GlobalVar";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function SignUp() {
       userQues: formValues.userQues,
     };
 
-    fetch("http://localhost:8080/signUp", {
+    fetch(`${url}/signUp`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       // the data to send
