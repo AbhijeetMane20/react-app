@@ -48,7 +48,7 @@ function ProductDetails() {
             <Card.Text>{product.productDescription}</Card.Text>
             <Card.Text>{product.productPrice} /-</Card.Text>
             <Button className="rounded mx-auto d-block" onClick={OnClickBuy}>
-              Buy
+              Buys
             </Button>
           </Card.Body>
         </Card>
