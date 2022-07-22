@@ -5,10 +5,14 @@ import url from "./GlobalVar";
 
 function Cart() {
   const [cart, setCart] = useState([]);
-  const user1 = JSON.parse(localStorage.getItem("user"));
+  console.log(cart)
+  const [quantities, setQuantities] = useState([]);
+  
+  
+  console.log(quantities)
+
   const token = localStorage.getItem("token");
-  const userId = user1?.userId;
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     refreshCart();
@@ -24,8 +28,25 @@ function Cart() {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     }).then((r) => {
-      r.json().then((j) => setCart(j));
+      r.json().then((items) => {
+        setCart(items);
+        const allQuantities = items.map((cartItem) => (cartItem.quantity));
+        setQuantities(allQuantities)
+        
+        
+      });
     });
+  }
+  function quantityDec(index) {
+    // const x = quantities[index]-1;
+    // setQuantities(x);
+    var newArray = [...quantities];
+    newArray[index] = quantities[index]-1;
+    setQuantities(newArray);
+    console.log("*****")
+   }
+  function quantityInc() {
+    setQuantities(quantities+1);
   }
   return (
     <div className="container">
@@ -33,24 +54,32 @@ function Cart() {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Product Id</th>
             <th>Product Name</th>
             <th>Quantity</th>
+            <th>Product Price</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {cart.map((cart) => (
-            <tr key={cart.productId}>
-              <td>{cart.product.productId}</td>
-              <td>{cart.product.productName}</td>
-              <td>{cart.quantity}</td>
+          {cart.map((cartItem,index) => (
+            <tr key={cartItem.cartItemId}>
+              <td>{cartItem.product.productName}</td>
+              <td>
+                <div>
+              {quantities[index]} <Button onClick={() => quantityDec(index)}>-</Button>
+                <Button onClick={quantityInc}>+</Button>
+                </div>
+              </td>
+              
+              <td>{cartItem.product.productPrice}</td>
+              <td>
               <Button
                 onClick={() => removeCartItem(cart)}
                 style={{ backgroundColor: "red" }}
               >
                 Delete
               </Button>
+              </td>
             </tr>
           ))}
         </tbody>
