@@ -8,8 +8,7 @@ function AddToCart() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const { register, getValues } = useForm();
-  // const user1 = JSON.parse(localStorage.getItem("user"));
-  // const userId = user1?.userId;
+
   const { id } = useParams();
   const token = localStorage.getItem("token");
   useEffect(() => {
