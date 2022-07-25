@@ -5,11 +5,11 @@ import url from "./GlobalVar";
 
 function Cart() {
   const [cart, setCart] = useState([]);
-  console.log(cart)
+
   const [quantities, setQuantities] = useState([]);
   
   
-  console.log(quantities)
+
 
   const token = localStorage.getItem("token");
 
@@ -18,9 +18,11 @@ function Cart() {
     refreshCart();
   }, []);
 
-  function removeCartItem(cart) {
-    fetch(`${url}/cart/userItem/${cart.productId}`, {
-      method: "DELETE",
+  function removeCartItem(cartItem) {
+    console.log(cartItem)
+    fetch(`${url}/cart/userItem/${cartItem.product.productId}`, {
+      method : "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
     }).then(() => refreshCart());
   }
   function refreshCart() {
@@ -43,10 +45,12 @@ function Cart() {
     var newArray = [...quantities];
     newArray[index] = quantities[index]-1;
     setQuantities(newArray);
-    console.log("*****")
+    
    }
-  function quantityInc() {
-    setQuantities(quantities+1);
+  function quantityInc(index) {
+    var newArray = [...quantities];
+    newArray[index] = quantities[index]+1;
+    setQuantities(newArray);
   }
   return (
     <div className="container">
@@ -67,17 +71,17 @@ function Cart() {
               <td>
                 <div>
               {quantities[index]} <Button onClick={() => quantityDec(index)}>-</Button>
-                <Button onClick={quantityInc}>+</Button>
+                <Button onClick={() => quantityInc(index)}>+</Button>
                 </div>
               </td>
               
               <td>{cartItem.product.productPrice}</td>
               <td>
               <Button
-                onClick={() => removeCartItem(cart)}
+                onClick={() => removeCartItem(cartItem)}
                 style={{ backgroundColor: "red" }}
               >
-                Delete
+                Remove
               </Button>
               </td>
             </tr>
