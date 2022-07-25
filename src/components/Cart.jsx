@@ -7,21 +7,17 @@ function Cart() {
   const [cart, setCart] = useState([]);
 
   const [quantities, setQuantities] = useState([]);
-  
-  
-
 
   const token = localStorage.getItem("token");
-
 
   useEffect(() => {
     refreshCart();
   }, []);
 
   function removeCartItem(cartItem) {
-    console.log(cartItem)
+    console.log(cartItem);
     fetch(`${url}/cart/userItem/${cartItem.product.productId}`, {
-      method : "DELETE",
+      method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     }).then(() => refreshCart());
   }
@@ -32,10 +28,8 @@ function Cart() {
     }).then((r) => {
       r.json().then((items) => {
         setCart(items);
-        const allQuantities = items.map((cartItem) => (cartItem.quantity));
-        setQuantities(allQuantities)
-        
-        
+        const allQuantities = items.map((cartItem) => cartItem.quantity);
+        setQuantities(allQuantities);
       });
     });
   }
@@ -43,13 +37,12 @@ function Cart() {
     // const x = quantities[index]-1;
     // setQuantities(x);
     var newArray = [...quantities];
-    newArray[index] = quantities[index]-1;
+    newArray[index] = quantities[index] - 1;
     setQuantities(newArray);
-    
-   }
+  }
   function quantityInc(index) {
     var newArray = [...quantities];
-    newArray[index] = quantities[index]+1;
+    newArray[index] = quantities[index] + 1;
     setQuantities(newArray);
   }
   return (
@@ -65,24 +58,25 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cart.map((cartItem,index) => (
+          {cart.map((cartItem, index) => (
             <tr key={cartItem.cartItemId}>
               <td>{cartItem.product.productName}</td>
               <td>
                 <div>
-              {quantities[index]} <Button onClick={() => quantityDec(index)}>-</Button>
-                <Button onClick={() => quantityInc(index)}>+</Button>
+                  {quantities[index]}{" "}
+                  <Button onClick={() => quantityDec(index)}>-</Button>
+                  <Button onClick={() => quantityInc(index)}>+</Button>
                 </div>
               </td>
-              
+
               <td>{cartItem.product.productPrice}</td>
               <td>
-              <Button
-                onClick={() => removeCartItem(cartItem)}
-                style={{ backgroundColor: "red" }}
-              >
-                Remove
-              </Button>
+                <Button
+                  onClick={() => removeCartItem(cartItem)}
+                  style={{ backgroundColor: "red" }}
+                >
+                  Remove
+                </Button>
               </td>
             </tr>
           ))}
