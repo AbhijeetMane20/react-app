@@ -8,7 +8,7 @@ function Cart() {
   console.log(cart)
 
   const [quantities, setQuantities] = useState([]);
-  console.log(quantities)
+  
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
