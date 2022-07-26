@@ -1,3 +1,2 @@
-
-const url = "https://ecom-project-backend.herokuapp.com";
+const url = "http://ecom-project-backend.herokuapp.com";
 export default url;

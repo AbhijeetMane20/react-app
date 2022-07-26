@@ -11,6 +11,9 @@ import OrderList from "./components/OrderList";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import UserOrder from "./components/UserOrder";
+import AddToCart from "./components/AddToCart";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 
 function App() {
   
@@ -28,6 +31,9 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/userOrder" element={<UserOrder />} />
+          <Route path="/addToCart/:id" element={<AddToCart />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </div>

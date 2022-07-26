@@ -6,7 +6,6 @@ function NavbarIndex() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-
   function logOut() {
     localStorage.removeItem("token");
     navigate("/");
@@ -27,6 +26,7 @@ function NavbarIndex() {
               <Nav.Link href="/addProduct">Add Product</Nav.Link>
               <Nav.Link href="/orders">Orders</Nav.Link>
               <Nav.Link href="/userOrder">User Order</Nav.Link>
+              <Nav.Link href="/cart">Cart</Nav.Link>
               <Navbar.Text>
                 {" "}
                 <User />{" "}

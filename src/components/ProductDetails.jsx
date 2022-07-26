@@ -25,6 +25,15 @@ function ProductDetails() {
       navigate("/login");
     }
   }
+  function AddToCart() {
+    if (userId) {
+      
+      navigate(`/addToCart/${product.productId}`);
+      
+    } else {
+      navigate("/login");
+    }
+  }
   return (
     <div
       style={{
@@ -47,9 +56,14 @@ function ProductDetails() {
             <Card.Title>{product.productName}</Card.Title>
             <Card.Text>{product.productDescription}</Card.Text>
             <Card.Text>{product.productPrice} /-</Card.Text>
-            <Button className="rounded mx-auto d-block" onClick={OnClickBuy}>
+            <div className="text-center">
+            <Button  onClick={OnClickBuy}>
               Buy
             </Button>
+            <Button  onClick={AddToCart}>
+              Add To Cart
+            </Button>
+            </div>
           </Card.Body>
         </Card>
       )}
