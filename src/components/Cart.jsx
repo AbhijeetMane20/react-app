@@ -5,10 +5,15 @@ import url from "./GlobalVar";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  console.log(cart)
 
   const [quantities, setQuantities] = useState([]);
+  console.log(quantities)
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.userId;
 
   useEffect(() => {
     refreshCart();
@@ -16,7 +21,7 @@ function Cart() {
 
   function removeCartItem(cartItem) {
     console.log(cartItem);
-    fetch(`${url}/cart/userItem/${cartItem.product.productId}`, {
+    fetch(`${url}/cart/cartItem/${cartItem.product.productId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     }).then(() => refreshCart());
@@ -26,24 +31,54 @@ function Cart() {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     }).then((r) => {
-      r.json().then((items) => {
-        setCart(items);
-        const allQuantities = items.map((cartItem) => cartItem.quantity);
+      r.json().then((resonse) => {
+        const allCart = resonse.cartItems;
+        setCart(allCart);
+        const allQuantities = resonse.cartItems.map((cartItem) => cartItem.quantity);
         setQuantities(allQuantities);
+        
       });
     });
+    
   }
-  function quantityDec(index) {
-    // const x = quantities[index]-1;
-    // setQuantities(x);
-    var newArray = [...quantities];
-    newArray[index] = quantities[index] - 1;
-    setQuantities(newArray);
+  function quantityDec(cartItem, index) {
+    changeQuantity(cartItem, index, -1);
   }
-  function quantityInc(index) {
-    var newArray = [...quantities];
-    newArray[index] = quantities[index] + 1;
-    setQuantities(newArray);
+  function quantityInc(cartItem,index) {
+    changeQuantity(cartItem,index, 1);
+  }
+
+function changeQuantity(cartItem, index, delta) {
+  var newArray = [...quantities];
+  const newQuantity = quantities[index] + delta;
+  newArray[index] = newQuantity;
+  setQuantities(newArray);
+  fetch(`${url}/cart/updateCart/${cartItem.cartItemId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    // the data to send
+    body: JSON.stringify({
+      productId : cartItem.product.productId,
+      quantity: newQuantity
+      
+    })
+    
+  }).then(() => refreshCart());
+  
+}
+
+  function checkout() {
+    if (userId) {
+      // navigate(`/addOrder/${product.productId}`);
+      
+      navigate("/checkout");
+    } else {
+      navigate("/login");
+    }
   }
   return (
     <div className="container">
@@ -54,6 +89,7 @@ function Cart() {
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Product Price</th>
+            <th>Total Price</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -64,12 +100,13 @@ function Cart() {
               <td>
                 <div>
                   {quantities[index]}{" "}
-                  <Button onClick={() => quantityDec(index)}>-</Button>
-                  <Button onClick={() => quantityInc(index)}>+</Button>
+                  <Button onClick={() => quantityDec(cartItem, index)}>-</Button>
+                  <Button onClick={() => quantityInc(cartItem, index)}>+</Button>
                 </div>
               </td>
 
               <td>{cartItem.product.productPrice}</td>
+              <td>{cartItem.totalPrice}</td>
               <td>
                 <Button
                   onClick={() => removeCartItem(cartItem)}
@@ -82,6 +119,9 @@ function Cart() {
           ))}
         </tbody>
       </table>
+      <div className="text-center">
+        <Button onClick={checkout}>Checkout</Button>
+      </div>
     </div>
   );
 }
